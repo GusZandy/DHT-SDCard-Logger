@@ -64,11 +64,11 @@ bool Storage::SdCard::isDirectoryEmpty(char *path) {
 const char *Storage::SdCard::implode(char buffer[], const struct Data *data, const char *delimiter) {
   // 14:25 25:01:2018,00.00,00.00
   char valueBuffer[10];
-  strcpy(buffer, data->timestamp);
-  strcat(buffer, (const char*)delimiter);
-  strcat(buffer, dtostrf(data->temperature, 1, 2, valueBuffer));
-  strcat(buffer, (const char*)delimiter);
-  strcat(buffer, dtostrf(data->humidity, 1, 2, valueBuffer));
+  strcpy(buffer, data->timestamp); //16
+  strcat(buffer, delimiter); //1
+  strcat(buffer, dtostrf(data->temperature, 1, 2, valueBuffer)); //5
+  strcat(buffer, delimiter); //1
+  strcat(buffer, dtostrf(data->humidity, 1, 2, valueBuffer)); //5
 
   return buffer;
 }
@@ -76,11 +76,11 @@ const char *Storage::SdCard::implode(char buffer[], const struct Data *data, con
 const char *Storage::SdCard::implode(char buffer[], char timestamp[], float temperature, float humidity, const char *delimiter) {
   // 14:25 25:01:2018,00.00,00.00
   char valueBuffer[10];
-  strcpy(buffer, timestamp);
-  strcat(buffer, (const char*)delimiter);
-  strcat(buffer, dtostrf(temperature, 1, 2, valueBuffer));
-  strcat(buffer, (const char*)delimiter);
-  strcat(buffer, dtostrf(humidity, 1, 2, valueBuffer));
+  strcpy(buffer, timestamp); //16
+  strcat(buffer, delimiter); //1
+  strcat(buffer, dtostrf(temperature, 1, 2, valueBuffer)); //5
+  strcat(buffer, delimiter); //1
+  strcat(buffer, dtostrf(humidity, 1, 2, valueBuffer)); //5
 
   return buffer;
 }
