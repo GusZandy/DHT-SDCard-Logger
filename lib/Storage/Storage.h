@@ -22,6 +22,7 @@ public:
     static void readFile(char *buffer, char *filepath, size_t expectedSize = 0);
     static void readFile(void *buffer, char *filepath, size_t expectedSize = 0);
     static bool isDirectoryEmpty(char *path);
+    static bool isinitialized(void) { return initialized; };
 
     static const char *implode(char buffer[], const struct Data *data, const char *delimiter);
     static const char *implode(char buffer[], char timestamp[], float temperature, float humidity, const char *delimiter);
