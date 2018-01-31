@@ -105,7 +105,7 @@ void Indicating::RTC::setDateTimeSQLFormat(const char *dateTimeSQLFormat) {
 const char *Indicating::RTC::getDateTimeSQLFormat(void) {
   static char dateTimeSQLFormatBuffer[17];
 
-  sprintf_P(dateTimeSQLFormatBuffer, (const char*) F("%d:%d %d-%d-%d"), dateTime.hour(), dateTime.minute(), dateTime.day(), dateTime.month(), dateTime.year());
+  sprintf_P(dateTimeSQLFormatBuffer, (const char*) F("%.2d:%.2d %d-%d-%d"), dateTime.hour(), dateTime.minute(), dateTime.day(), dateTime.month(), dateTime.year());
   return dateTimeSQLFormatBuffer;
 }
 
