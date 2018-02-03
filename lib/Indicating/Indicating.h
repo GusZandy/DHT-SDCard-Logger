@@ -40,8 +40,6 @@ public:
     static void setup();
     static void loop();
 
-    static DateTime getDateTime(void) { return dateTime; };
-    static void setDateTimeSQLFormat(const char *dateTimeGSMFormat);
     static const char *getDateTimeSQLFormat(void);
     static const unsigned char getHour(void) { return dateTime.hour(); };
     static const unsigned char getMinute(void) { return dateTime.minute(); };

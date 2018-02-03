@@ -20,8 +20,8 @@
 #define DHT_PIN 5
 #endif
 
-/*==SD #ARD==*/
-#define SD_SS_PIN 4
+/*==SD CARD==*/
+#define SD_SS_PIN 10
 
 #define MEASUREMENT_INTERVAL 1000   //in miliseconds
 #define LOGGING_INTERVAL 2         //in Minutes

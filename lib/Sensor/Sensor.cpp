@@ -17,45 +17,12 @@ void Sensor::setSleep(bool sleep) {
 }
 
 void Sensor::setup(void) {
-  // Suhu::setup();
   DHT_11::setup();
-  Indicating::LCD::bootInfo("Init Sensor.", 3);
+  Indicating::LCD::bootInfo("Init Sensor.", 2);
 }
 
 void Sensor::loop(void) {
-  // Suhu::loop();
   DHT_11::loop();
-}
-
-bool Sensor::Suhu::sleep = false;
-bool Sensor::Suhu::sleepBuffer = false;
-
-unsigned int Sensor::Suhu::adc;
-float Sensor::Suhu::temperature;
-
-void Sensor::Suhu::setup(void) {
-  pinMode(LM35_PIN, INPUT);
-}
-
-void Sensor::Suhu::loop(void) {
-  if (sleepBuffer != sleep) {
-    sleep = sleepBuffer;
-  }
-  char valueBuffer[10];
-  if (sleep) return;
-
-  static unsigned long measurementTime = millis() - MEASUREMENT_INTERVAL;
-
-  if (millis() - measurementTime >= MEASUREMENT_INTERVAL) {
-    adc = analogRead(LM35_PIN);
-    for (size_t i = 0; i < 1000; i++) {
-      temperature += (3.30 *  (adc) * 100.00) / 1024.00; //dikurangi 10 hasil kalibrasi di 0 volt
-    }
-    temperature = temperature / 1000.00;
-    measurementTime = millis();
-  }
-
-  System::Debugging::println("temperature: %s", dtostrf(temperature, 1, 2, valueBuffer));
 }
 
 bool Sensor::DHT_11::sleep = false;
@@ -67,15 +34,6 @@ float Sensor::DHT_11::humidity;
 
 DHT_Unified Sensor::DHT_11::dht(DHT_PIN, DHT_TYPE);
 sensor_t Sensor::DHT_11::sensor;
-struct Data Sensor::DHT_11::data;
-
-struct Data &Sensor::DHT_11::getDHTData(void) {
-  strcpy(data.timestamp, Indicating::RTC::getDateTimeSQLFormat());
-  data.temperature = getTemperature();
-  data.humidity = getHumidity();
-
-  return data;
-}
 
 void Sensor::DHT_11::setup(void) {
   dht.begin();

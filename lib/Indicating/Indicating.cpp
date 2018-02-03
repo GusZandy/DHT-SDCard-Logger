@@ -40,8 +40,8 @@ DateTime Indicating::RTC::dateTimeBuffer;
 bool Indicating::RTC::sleep = false;
 bool Indicating::RTC::sleepBuffer = false;
 
-int Indicating::RTC::timezone = 0;
-bool Indicating::RTC::dateTimeChanged = false;
+// int Indicating::RTC::timezone = 0;
+// bool Indicating::RTC::dateTimeChanged = false;
 volatile bool Indicating::RTC::halfSecond = false;
 volatile unsigned int Indicating::RTC::secondCount = 0;
 
@@ -83,29 +83,10 @@ void Indicating::RTC::setSleep(bool sleep) {
   sleepBuffer = sleep;
 }
 
-void Indicating::RTC::setDateTimeSQLFormat(const char *dateTimeSQLFormat) {
-  char dateTimeSQLFormatBuffer[strlen(dateTimeSQLFormat) + 1];
-  int year, month, day, hour, minute, second;
-
-  strcpy(dateTimeSQLFormatBuffer, dateTimeSQLFormat);
-  year = atoi(strtok(dateTimeSQLFormatBuffer, " /,:+-"));
-  month = atoi(strtok(NULL, " /,:+-"));
-
-  day = atoi(strtok(NULL, "  /,:+-"));
-  hour = atoi(strtok(NULL, " /,:+-"));
-  minute = atoi(strtok(NULL, " /,:+-"));
-  second = atoi(strtok(NULL, " /,:+-"));
-  timezone = atoi(dateTimeSQLFormat + 17) / 4;
-
-  dateTimeBuffer = DateTime(year, month, day, hour, minute, second);
-  secondCount = 0;
-  dateTimeChanged = true;
-}
-
 const char *Indicating::RTC::getDateTimeSQLFormat(void) {
   static char dateTimeSQLFormatBuffer[17];
 
-  sprintf_P(dateTimeSQLFormatBuffer, (const char*) F("%.2d:%.2d %d-%d-%d"), dateTime.hour(), dateTime.minute(), dateTime.day(), dateTime.month(), dateTime.year());
+  sprintf_P(dateTimeSQLFormatBuffer, (const char*) F("%.2d:%.2d,%d-%d-%d"), dateTime.hour(), dateTime.minute(), dateTime.day(), dateTime.month(), dateTime.year());
   return dateTimeSQLFormatBuffer;
 }
 
@@ -178,6 +159,9 @@ void Indicating::LCD::measurement(unsigned char hour, unsigned char minute, bool
 
   //status
   lcd.setCursor(0, 0);
+  // if (status) {
+  //   lcd.print("x");
+  // } else lcd.print(" ");
 
   //clock
   if (doubleDots) {

@@ -19,12 +19,8 @@ public:
     static void loop(void);
 
     static bool writeFile(char *filepath, const char *data, size_t size);
-    static void readFile(char *buffer, char *filepath, size_t expectedSize = 0);
-    static void readFile(void *buffer, char *filepath, size_t expectedSize = 0);
-    static bool isDirectoryEmpty(char *path);
-    static bool isinitialized(void) { return initialized; };
+    static bool isInitialized(void) { return initialized; };
 
-    static const char *implode(char buffer[], const struct Data *data, const char *delimiter);
     static const char *implode(char buffer[], char timestamp[], float temperature, float humidity, const char *delimiter);
   };
 };
