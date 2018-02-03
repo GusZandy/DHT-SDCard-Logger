@@ -17,7 +17,7 @@ void setup() {
 
 void loop() {
   struct Data *temp;
-  static bool hasWritten = false;
+  volatile static bool hasWritten = false;
   temp = &Sensor::DHT_11::getDHTData();
 
   System::loop();
@@ -34,16 +34,14 @@ void loop() {
 
   Storage::loop();
   if (((currentMinuteInDay % LOGGING_INTERVAL) == 0)) {
-    if (temp->temperature == 0.00f || temp->humidity == 0.00f) {
-      return;
-    } else if (Storage::SdCard::isinitialized() && !hasWritten) {
+    if (Storage::SdCard::isinitialized() && !hasWritten && (temp->temperature != 0.00f || temp->humidity != 0.00f)) {
       char buffer[35];
       temp = &Sensor::DHT_11::getDHTData();
       Storage::SdCard::implode(buffer, temp, ",");
       Storage::SdCard::writeFile((char*) "log", buffer, strlen(buffer));
       hasWritten = true;
-      return;
     }
+    return;
   }
   hasWritten = false;
 
