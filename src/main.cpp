@@ -21,12 +21,12 @@ void loop() {
   System::loop();
   Indicating::loop();
   Sensor::loop();
-  Indicating::LCD::measurement(Indicating::RTC::getHour(), Indicating::RTC::getMinute(), Indicating::RTC::getHalfSecond(), 0, Sensor::DHT_11::getTemperature(), Sensor::DHT_11::getHumidity());
+  Indicating::LCD::measurement(Indicating::RTC::getHour(), Indicating::RTC::getMinute(), Indicating::RTC::getHalfSecond(), Storage::SdCard::isInitialized(), Sensor::DHT_11::getTemperature(), Sensor::DHT_11::getHumidity());
 
   static unsigned long lastSleep = millis();
   static bool isTimeout = false;
   unsigned int currentMinuteInDay = ((unsigned int) Indicating::RTC::getHour() * 60) + (unsigned int) Indicating::RTC::getMinute();
-  isTimeout = (millis() - lastSleep);
+  isTimeout = (millis() - lastSleep > 60000);
 
   Storage::loop();
   if (((currentMinuteInDay % LOGGING_INTERVAL) == 0)) {
@@ -41,6 +41,6 @@ void loop() {
   hasWritten = false;
 
   if (isTimeout) {
-    /* code */
+    Indicating::LCD::idle();
   }
 }

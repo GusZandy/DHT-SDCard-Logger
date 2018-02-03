@@ -185,6 +185,9 @@ void Indicating::LCD::measurement(unsigned char hour, unsigned char minute, bool
 
   //status
   lcd.setCursor(0, 0);
+  if (status) {
+    lcd.print("SD");
+  } else lcd.print(" ");
 
   //clock
   if (doubleDots) {
