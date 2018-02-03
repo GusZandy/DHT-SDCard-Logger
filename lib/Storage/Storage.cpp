@@ -7,6 +7,14 @@ File Storage::SdCard::file;
 
 bool Storage::SdCard::initialized = false;
 
+void Storage::setup(void) {
+  SdCard::setup();
+}
+
+void Storage::loop(void) {
+  SdCard::loop();
+}
+
 /* Public */
 void Storage::SdCard::setup(void) {
   // Indicating::Display::splash(F("Init SD Card"));
@@ -15,7 +23,7 @@ void Storage::SdCard::setup(void) {
   digitalWrite(SD_SS_PIN, HIGH);
   if (!SD.begin(SD_SS_PIN)) {
     // Indicating::Display::splash(F("Init SD Gagal"));
-    delay(3000);
+    // delay(3000);
     return;
   }
   initialized = true;
@@ -23,9 +31,12 @@ void Storage::SdCard::setup(void) {
 
 void Storage::SdCard::loop(void) {
   if (!initialized) {
+    Serial.print("Trtying to initialized... ");
     if (!SD.begin(SD_SS_PIN)) {
+      Serial.println("failed");
       return;
     }
+    Serial.println("succes");
     initialized = true;
   }
 }
@@ -36,9 +47,9 @@ bool Storage::SdCard::writeFile(char *filepath, const char *data, size_t size) {
   if(file) {
     file.println(data);
     file.close();
+    Serial.println(data);
     return true;
   } else return false;
-  return true;
 }
 
 void Storage::SdCard::readFile(char *buffer, char *filepath, size_t expectedSize) {

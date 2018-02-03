@@ -7,7 +7,8 @@
 #include <DHT_U.h>
 
 struct Data {
-  char timestamp[17];
+  // xx:xx xx-xx-xxxx
+  char timestamp[18];
   float temperature;
   float humidity;
 };
